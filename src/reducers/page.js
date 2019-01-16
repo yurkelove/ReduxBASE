@@ -1,6 +1,9 @@
+import { GET_PHOTOS_REQUEST, GET_PHOTOS_SUCCESS } from '../action/PageAction'
+
 const initialState = {
   year: 2018,
   photos: [],
+  isFetching: false,
 }
 
 // Научим редьюсер page реагировать на наше действие(action):
@@ -8,8 +11,11 @@ const initialState = {
 //мы не изменили объект state, а вернули новый с полем year равным action.payload (а значит годом, выбранным пользователем, который был послан в action.payload).
 export function pageReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SET_YEAR':
-      return { ...state, year: action.payload } // мы не изменили объект state
+    case GET_PHOTOS_REQUEST:
+      return { ...state, year: action.payload, isFetching: true }
+
+    case GET_PHOTOS_SUCCESS:
+      return { ...state, photos: action.payload, isFetching: false }
 
     default:
       return state
